@@ -48,15 +48,17 @@ def Generator():
     for i in range(len(fileNamesFluor)):
         print(i)
         print(type(fileNameOutput))
-        imgFluor = cv2.imread(fileNamesFluor[i], cv2.IMREAD_GRAYSCALE)
-        imgColor = cv2.imread(fileNamesColor[i], cv2.IMREAD_GRAYSCALE)
+        imgFluor = cv2.imread(fileNamesFluor[i], cv2.IMREAD_GRAYSCALE).astype(np.float32)
+        imgColor = cv2.imread(fileNamesColor[i], cv2.IMREAD_GRAYSCALE).astype(np.float32)
         fileNameOutput = [fileNamesFluor,  'Output']
         print(fileNameOutput)
         print(type(fileNameOutput))
-        img = imgFluor / imgColor
-        image_eq = cv2.equalizeHist(img)
+        img = cv2.divide(imgFluor, imgColor)
+        # image_eq = cv2.equalizeHist(img)
+        image_eq = cv2.normalize(img, None, 0, 255, cv2.NORM_MINMAX)
+        image_eq = image_eq.astype(np.uint8)
         #####################################################
-        # cv2.imshow("Image", img)
+        # cv2.imshow("Image", image_eq)
         # cv2.waitKey(0)
         # cv2.destroyAllWindows()
         ######################################################
@@ -66,9 +68,9 @@ def Generator():
         plt.imshow(image_eq)
         plt.colorbar()
         fileNameOutput = fileNameOutput[:-3]
-        plt.savefig(fileNameOutput+'bmp')
+        # plt.savefig([fileNameOutput, 'bmp'])
         plt.show()
-    text1.insert(INSERT, 'Готово')
+    text2.insert(INSERT, 'Готово')
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
