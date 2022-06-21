@@ -47,20 +47,23 @@ def Generator():
     fileNameOutput = ""
     for i in range(len(fileNamesFluor)):
         print(i)
+        fileNameOutput = str(fileNamesFluor)
+        fileNameOutput = fileNameOutput[:-6]
+        fileNameOutput = fileNameOutput[2:] + "Result.png"
+        # prin//t(fileNameOutput)
+        # # fileNameOutput =
+        # fileNameOutput = str(fileNamesFluor) + "Result.bmp"
+        print(fileNameOutput)
         print(type(fileNameOutput))
         # imgFluor = cv2.imread(fileNamesFluor[i], cv2.IMREAD_GRAYSCALE).astype(np.float32)
         # imgColor = cv2.imread(fileNamesColor[i], cv2.IMREAD_GRAYSCALE).astype(np.float32)
         imgFluor = cv2.imread(fileNamesFluor[i])
         imgColor = cv2.imread(fileNamesColor[i])
-        fileNameOutput = fileNameOutput[:-3]+'output.bmp'
-        print(fileNameOutput)
-        print(type(fileNameOutput))
         # img = cv2.divide(imgFluor, imgColor)
         img = cv2.subtract(imgFluor, imgColor)
-        # img = BGR
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img = img[:, :, 0]
-        cv2.imshow('img',img)
+        cv2.imshow('img', img)
         # image_eq = cv2.equalizeHist(img)
         image_eq = cv2.normalize(img, None, 0, 255, cv2.NORM_MINMAX)
         # image_eq = image_eq.astype(np.uint8)
@@ -74,8 +77,12 @@ def Generator():
         # plt.imshow(img)
         plt.imshow(image_eq)
         plt.colorbar()
-        fileNameOutput = fileNameOutput[:-3]
-        # plt.savefig([fileNameOutput, 'bmp'])
+        # print(fileNameOutput)
+        # fileNameOutput = fileNameOutput[:-3]
+        # print(fileNameOutput)
+        # fileNameOutput = [fileNameOutput, 'bmp']
+        # print(fileNameOutput)
+        plt.savefig(fileNameOutput)
         plt.show()
     text2.insert(INSERT, 'Готово')
 
